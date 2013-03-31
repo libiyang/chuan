@@ -257,7 +257,21 @@ namespace GoogleHit
                     Application.DoEvents();
                     Thread.Sleep(500);
                 }
-                goBtn.InvokeMember("click");
+                if (goBtn == null)
+                {
+                    goBtn = this.wbYahoo.Document.All["btnG"];
+                    if (goBtn == null)
+                    {
+                        goBtn = this.wbYahoo.Document.GetElementById("btnG");
+                    }
+                    if (goBtn == null)
+                    {
+                        string purl = "http://www.google.com.tw/search?q=" + HttpUtility.UrlEncode(keyWord) + "&?hl=zh-TW&newwindow=1&biw=1364&bih=653&ei=XM9HUeeEFI3OkwXHl4CQCQ&sa=N&start=0";
+                        this.Navigate(this.wbYahoo, purl);
+                    }
+                    else
+                        goBtn.InvokeMember("click");
+                }
                 Application.DoEvents();
                 this.Wait();
                 for (int i = 0; i <= 30; i++)
